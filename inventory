@@ -1,0 +1,9 @@
+[docker3]
+10.10.10.61 ansible_ssh_user=funk
+
+[docker4]
+10.10.10.62 ansible_ssh_user=funk
+
+[dockerhosts:children]
+docker3
+docker4
