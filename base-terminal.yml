@@ -1,0 +1,30 @@
+---
+# apt install packages
+
+- name: Install terminal packages
+  hosts: all
+  become: true
+
+  vars:
+    package_list:
+      - tmux
+      - exa
+      - bat
+      - git
+      - wget
+      - iperf
+      - mc
+      - htop
+      - ncdu
+      - python3
+      - python3-pip
+      - curl
+
+  tasks:
+    - name: apt install
+      apt:
+        name: "{{ item }}"
+        state: latest
+        update_cache: true
+        cache_valid_time: 3600
+      with_items: "{{ package_list }}"
