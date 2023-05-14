@@ -1,0 +1,44 @@
+---
+# apt install packages
+
+- name: Setup Fedora workstation
+  hosts: fedorawm
+  become: true
+
+  vars:
+    package_list:
+      - tmux
+      - exa
+      - bat
+      - git
+      - wget
+      - iperf3
+      - mc
+      - htop
+      - ncdu
+      - python3
+      - python3-pip
+      - curl
+
+    gnome_extensions:
+      - gnome-shell-extension-dash-to-dock
+      - gnome-shell-extension-blur-my-shell
+      - gnome-shell-extension-freon
+      - gnome-shell-extension-just-perfection
+      - gnome-shell-extension-netspeed
+
+
+  tasks:
+    - name: DNF | Install terminal packages
+      dnf:
+        name: "{{ item }}"
+        state: present
+        update_cache: true
+      with_items: "{{ package_list }}"
+
+    - name: DNF | Install gnome extensions
+      dnf:
+        name: "{{ item }}"
+        state: present
+        update_cache: true
+      with_items: "{{ gnome_extensions }}"
