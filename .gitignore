@@ -1,0 +1,4 @@
+.vscode
+
+# gitignore macOS spcific files
+.DS_Store
