@@ -4,6 +4,9 @@
 [docker4]
 10.10.10.62 ansible_ssh_user=funk
 
+[fedorawm]
+10.10.10.208 ansible_ssh_user=funk
+
 [dockerhosts:children]
 docker3
 docker4
