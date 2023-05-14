@@ -1,0 +1,49 @@
+---
+# install alacritty
+
+- name: Install and setup alacritty
+  hosts: all
+  become: true
+  tasks:
+    - name: Install alacritty package
+      ansible.builtin.package:
+        name: alacritty
+        state: present
+
+    # - name: Copy alacritty config
+    #   ansible.builtin.copy:
+    #     src: alacritty.yml
+    #     dest: ~/.config/alacritty/alacritty.yml
+    #     owner: "{{ ansible_user }}"
+    #     group: "{{ ansible_user }}"
+    #     mode: '644'
+
+    - name: Git clone alacritty themes
+      ansible.builtin.git:
+        repo: https://github.com/alacritty/alacritty-theme
+        dest: ~/.config/alacritty/themes
+        clone: yes
+        force: yes
+        update: yes
+
+    - name: Download Nerd Fonts
+      ansible.builtin.get_url:
+        url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.0/Hack.zip
+        dest: /home/{{ ansible_user }}/Downloads/Hack.zip
+
+    - name: Create fonts directory
+      ansible.builtin.file:
+        path: /home/{{ ansible_user }}/.local/share/fonts
+        state: directory
+        owner: "{{ ansible_user }}"
+
+    - name: Unzip Nerd Fonts
+      ansible.builtin.unarchive:
+        src: /home/{{ ansible_user }}/Downloads/Hack.zip
+        dest: /home/{{ ansible_user }}/.local/share/fonts
+        remote_src: true
+        owner: "{{ ansible_user }}"
+
+    - name: Update font cache
+      ansible.builtin.command: fc-cache -f -v
+      changed_when: false
