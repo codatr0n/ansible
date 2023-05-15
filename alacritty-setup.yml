@@ -4,6 +4,9 @@
 - name: Install and setup alacritty
   hosts: all
   become: true
+  vars:
+    ansible_user: funk
+
   tasks:
     - name: Install alacritty package
       ansible.builtin.package:
@@ -22,20 +25,24 @@
       ansible.builtin.git:
         repo: https://github.com/alacritty/alacritty-theme
         dest: ~/.config/alacritty/themes
-        clone: yes
-        force: yes
-        update: yes
+        clone: true
+        force: true
+        update: true
+      when: not alacritty_themes.stat.exists
 
     - name: Download Nerd Fonts
       ansible.builtin.get_url:
         url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.0/Hack.zip
         dest: /home/{{ ansible_user }}/Downloads/Hack.zip
+        mode: '0644'
 
     - name: Create fonts directory
       ansible.builtin.file:
         path: /home/{{ ansible_user }}/.local/share/fonts
         state: directory
         owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0755'
 
     - name: Unzip Nerd Fonts
       ansible.builtin.unarchive:
