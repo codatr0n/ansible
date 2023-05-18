@@ -29,7 +29,7 @@
 
     - name: Add VS Code repo
       ansible.builtin.yum_repository:
-        name: Visual Studio Code
+        name: code
         baseurl: https://packages.microsoft.com/yumrepos/vscode
         state: present
         description: Visual Studio Code
