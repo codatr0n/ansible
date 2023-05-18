@@ -14,6 +14,28 @@
         regexp: '^proxy='
         line: 'proxy=http://10.10.10.100:3142'
 
+    ## optimize dnf settings
+    - name: DNF set fastest mirror
+      ansible.builtin.lineinfile:
+        path: /etc/dnf/dnf.conf
+        regexp: '^fastestmirror='
+        line: 'fastestmirror=true'
+      notify: restart dnf
+
+    - name: DNF set max parallel downloads
+      ansible.builtin.lineinfile:
+        path: /etc/dnf/dnf.conf
+        regexp: '^max_parallel_downloads='
+        line: 'max_parallel_downloads=10'
+      notify: restart dnf
+
+    - name: DNF set deltarpm
+      ansible.builtin.lineinfile:
+        path: /etc/dnf/dnf.conf
+        regexp: '^deltarpm='
+        line: 'deltarpm=true'
+      notify: restart dnf
+
     ###### The following imports repo keys for RPM Fusion
     - name: Importing RPM Fusion (free) key
       become: true
