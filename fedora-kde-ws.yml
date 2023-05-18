@@ -7,14 +7,7 @@
 
   tasks:
 
-    - name: Install distribution keys
-      ansible.builtin.dnf:
-        name:
-          - fedora-workstation-repositories
-          - rpmfusion-free-release
-          - rpmfusion-nonfree-release
-          - https://packages.microsoft.com/keys/microsoft.asc
-        state: present
+
 
     - name: Enable the RPM Fusion free repository
       ansible.builtin.dnf:
