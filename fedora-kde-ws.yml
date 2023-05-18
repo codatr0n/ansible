@@ -7,6 +7,13 @@
 
   tasks:
 
+    ## add dnf proxy
+    - name: Add dnf proxy
+      ansible.builtin.lineinfile:
+        path: /etc/dnf/dnf.conf
+        regexp: '^proxy='
+        line: 'proxy=http://10.10.10.100:3142'
+
     ###### The following imports repo keys for RPM Fusion
     - name: Importing RPM Fusion (free) key
       become: true
