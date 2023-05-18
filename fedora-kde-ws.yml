@@ -7,7 +7,11 @@
 
   tasks:
 
-
+    - name: DNF | Install RPM Fusion
+      ansible.builtin.dnf:
+        name: rpmfusion-free-release-tainted rpmfusion-nonfree-release-tainted
+        state: present
+      when: ansible_distribution == 'Fedora'
 
     - name: Enable the RPM Fusion free repository
       ansible.builtin.dnf:
